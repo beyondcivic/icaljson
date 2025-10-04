@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 // Generate generates JSON file from a ICS file with automatic type inference.
@@ -97,7 +98,7 @@ func parseICS(file *os.File) (*Calendar, error) {
 		}
 
 		// Parse properties
-		name, value, err := parseProperty(line)
+		name, value, tzid, err := parsePropertyWithTZ(line)
 		if err != nil {
 			continue // Skip malformed lines
 		}
@@ -120,14 +121,20 @@ func parseICS(file *os.File) (*Calendar, error) {
 			// Required properties
 			case "UID":
 				currentEvent.UID = value
-			case "DTSTAMP":
-				currentEvent.DTStamp = value
 
-			// Date/Time properties
+			// Date/Time properties - parse to ISO8601 UTC
 			case "DTSTART", "DTSTART;TZID":
-				currentEvent.Start = value
+				if parsed := parseICalDateTimeWithTZ(value, tzid); parsed != "" {
+					currentEvent.Start = parsed
+				} else {
+					currentEvent.Start = value // Fallback to raw value if parsing fails
+				}
 			case "DTEND", "DTEND;TZID":
-				currentEvent.End = value
+				if parsed := parseICalDateTimeWithTZ(value, tzid); parsed != "" {
+					currentEvent.End = parsed
+				} else {
+					currentEvent.End = value // Fallback to raw value if parsing fails
+				}
 			case "DURATION":
 				currentEvent.Duration = value
 
@@ -214,6 +221,47 @@ func parseICS(file *os.File) (*Calendar, error) {
 	return calendar, nil
 }
 
+// parseICalDateTimeWithTZ converts iCalendar datetime format to ISO8601 UTC
+// Supports formats like:
+// - 20251004T090000Z (UTC)
+// - 20251004T090000 (local time, will be converted to UTC if tzid provided)
+// - 20251004 (date only)
+func parseICalDateTimeWithTZ(icalDate string, tzid string) string {
+	if icalDate == "" {
+		return ""
+	}
+
+	// Try parsing as UTC datetime (with Z suffix) - already in UTC
+	if t, err := time.Parse("20060102T150405Z", icalDate); err == nil {
+		return t.Format(time.RFC3339)
+	}
+
+	// Try parsing as local datetime with timezone conversion
+	if t, err := time.Parse("20060102T150405", icalDate); err == nil {
+		// If timezone ID is provided, load the timezone and convert to UTC
+		if tzid != "" {
+			loc, err := time.LoadLocation(tzid)
+			if err == nil {
+				// Parse the time in the specified timezone
+				localTime := time.Date(t.Year(), t.Month(), t.Day(),
+					t.Hour(), t.Minute(), t.Second(), 0, loc)
+				// Convert to UTC and format as RFC3339
+				return localTime.UTC().Format(time.RFC3339)
+			}
+		}
+		// No timezone or timezone load failed - return as-is without timezone info
+		return t.Format("2006-01-02T15:04:05")
+	}
+
+	// Try parsing as date only
+	if t, err := time.Parse("20060102", icalDate); err == nil {
+		return t.Format("2006-01-02")
+	}
+
+	// Return empty string if parsing fails
+	return ""
+}
+
 // unfoldLines handles RFC 5545 line folding where lines starting with space or tab
 // are continuations of the previous line
 func unfoldLines(lines []string) []string {
@@ -241,34 +289,37 @@ func unfoldLines(lines []string) []string {
 	return result
 }
 
-// parseProperty parses a property line into name and value
+// parsePropertyWithTZ parses a property line into name, value, and timezone ID
 // Handles properties with parameters like "DTSTART;TZID=Europe/Zurich:20251004T090000"
-func parseProperty(line string) (string, string, error) {
+func parsePropertyWithTZ(line string) (string, string, string, error) {
 	// Find the colon that separates name from value
 	colonIndex := strings.Index(line, ":")
 	if colonIndex == -1 {
-		return "", "", AppError{Message: "invalid property line: no colon found"}
+		return "", "", "", AppError{Message: "invalid property line: no colon found"}
 	}
 
 	nameWithParams := line[:colonIndex]
 	value := line[colonIndex+1:]
+	tzid := ""
 
-	// Extract just the property name (before any semicolon)
-	// For "DTSTART;TZID=Europe/Zurich", we want "DTSTART"
-	// But we'll keep the full nameWithParams for matching specific cases
+	// Extract the property name and timezone if present
+	// For "DTSTART;TZID=Europe/Zurich", we want "DTSTART", "Europe/Zurich"
 	name := nameWithParams
 	if semicolonIndex := strings.Index(nameWithParams, ";"); semicolonIndex != -1 {
-		// For properties with parameters, we'll use a simplified name
 		baseName := nameWithParams[:semicolonIndex]
-		// For DTSTART and DTEND with timezone, we create a composite key
-		if baseName == "DTSTART" || baseName == "DTEND" {
+		params := nameWithParams[semicolonIndex+1:]
+
+		// Extract TZID parameter if present
+		if strings.HasPrefix(params, "TZID=") {
+			tzid = strings.TrimPrefix(params, "TZID=")
+			// For DTSTART and DTEND with timezone, we create a composite key
 			name = baseName + ";TZID"
 		} else {
 			name = baseName
 		}
 	}
 
-	return name, value, nil
+	return name, value, tzid, nil
 }
 
 // unescapeText unescapes special characters in text values according to RFC 5545

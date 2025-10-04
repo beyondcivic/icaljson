@@ -17,8 +17,7 @@ type Calendar struct {
 // Event represents a VEVENT component according to RFC 5545
 type Event struct {
 	// Required properties (in most contexts)
-	UID     string `json:"uid,omitempty"`     // Unique identifier
-	DTStamp string `json:"dtstamp,omitempty"` // Date-time stamp
+	UID string `json:"uid,omitempty"` // Unique identifier
 
 	// Date/Time properties
 	Start    string `json:"start,omitempty"`    // DTSTART - Start date/time

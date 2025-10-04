@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -198,9 +199,22 @@ func parseICS(file *os.File) (*Calendar, error) {
 			case "RDATE", "RDATE;TZID":
 				currentEvent.RDates = append(currentEvent.RDates, value)
 
-			// Other properties
 			case "GEO":
-				currentEvent.Geo = value
+				// Other properties
+				if value != "" {
+					parts := strings.Split(value, ";")
+					if len(parts) == 2 {
+						lat, err1 := strconv.ParseFloat(parts[0], 64)
+						lon, err2 := strconv.ParseFloat(parts[1], 64)
+						if err1 == nil && err2 == nil {
+							currentEvent.Geo = Geolocation{
+								Latitude:  lat,
+								Longitude: lon,
+							}
+						}
+					}
+				}
+
 			case "RESOURCES":
 				if value != "" {
 					resources := strings.Split(value, ",")

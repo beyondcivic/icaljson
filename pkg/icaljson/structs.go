@@ -14,6 +14,11 @@ type Calendar struct {
 	Events []Event `json:"events,omitempty"`
 }
 
+type Geolocation struct {
+	Latitude  float64 `json:"latitude,omitempty"`
+	Longitude float64 `json:"longitude,omitempty"`
+}
+
 // Event represents a VEVENT component according to RFC 5545
 type Event struct {
 	// Required properties (in most contexts)
@@ -57,9 +62,9 @@ type Event struct {
 	RDates       []string `json:"rdates,omitempty"`        // Recurrence dates
 
 	// Other properties
-	Geo       string   `json:"geo,omitempty"`        // Geographic position (latitude;longitude)
-	Resources []string `json:"resources,omitempty"`  // Resources needed
-	Contact   string   `json:"contact,omitempty"`    // Contact information
-	RelatedTo string   `json:"related_to,omitempty"` // Related to other component
-	Comment   string   `json:"comment,omitempty"`    // Comment
+	Geo       Geolocation `json:"geo,omitempty"`        // Geographic position (latitude;longitude)
+	Resources []string    `json:"resources,omitempty"`  // Resources needed
+	Contact   string      `json:"contact,omitempty"`    // Contact information
+	RelatedTo string      `json:"related_to,omitempty"` // Related to other component
+	Comment   string      `json:"comment,omitempty"`    // Comment
 }

@@ -4,24 +4,32 @@
   "calscale": "GREGORIAN",
   "events": [
     {
-      "uid": "1759561549886-64303@ical.marudot.com",
-      "dtstamp": "20251004T070657Z",
+      "uid": "1",
       "start": "2025-10-03T10:00:00Z",
       "end": "2025-10-03T14:00:00Z",
       "summary": "event2",
       "description": "another description",
       "location": "allmendstrasse 12, 8041 zurich",
-      "url": "https://example2.ch"
+      "url": "https://example2.ch",
+      "geo": {
+        "latitude": 47.378177,
+        "longitude": 8.540192
+      },
+      "comment": "this is a comment"
     },
     {
-      "uid": "1759561498910-10066@ical.marudot.com",
-      "dtstamp": "20251004T070657Z",
+      "uid": "2",
       "start": "2025-10-04T07:00:00Z",
       "end": "2025-10-04T08:00:00Z",
       "summary": "event1",
       "description": "this is a description",
       "location": "bahnhoftrasse 1 8001 zurich",
-      "url": "https://example.ch"
+      "url": "https://example.ch",
+      "geo": {
+        "latitude": 47.378177,
+        "longitude": 8.540192
+      },
+      "comment": "this is a comment"
     }
   ]
 }

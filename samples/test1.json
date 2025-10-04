@@ -1,0 +1,27 @@
+{
+  "prodid": "-//ical.marudot.com//iCal Event Maker",
+  "version": "2.0",
+  "calscale": "GREGORIAN",
+  "events": [
+    {
+      "uid": "1759561549886-64303@ical.marudot.com",
+      "dtstamp": "20251004T070657Z",
+      "start": "20251003T120000",
+      "end": "20251003T160000",
+      "summary": "event2",
+      "description": "another description",
+      "location": "allmendstrasse 12, 8041 zurich",
+      "url": "https://example2.ch"
+    },
+    {
+      "uid": "1759561498910-10066@ical.marudot.com",
+      "dtstamp": "20251004T070657Z",
+      "start": "20251004T090000",
+      "end": "20251004T100000",
+      "summary": "event1",
+      "description": "this is a description",
+      "location": "bahnhoftrasse 1 8001 zurich",
+      "url": "https://example.ch"
+    }
+  ]
+}

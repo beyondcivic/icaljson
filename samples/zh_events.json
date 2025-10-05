@@ -1,0 +1,91 @@
+{
+    "prodid": "-//ical.marudot.com//iCal Event Maker",
+    "version": "2.0",
+    "calscale": "GREGORIAN",
+    "events": [
+        {
+            "uid": "1",
+            "start": "2025-10-01T20:00:00Z",
+            "end": "2025-10-01T23:00:00Z",
+            "summary": "Jazz Festival Opening Night",
+            "description": "Opening night of the Zurich Jazz Festival featuring international artists and local talent. An evening of smooth jazz and contemporary sounds.",
+            "location": "Tonhalle Zurich, Gotthardstrasse 5, 8002 Zurich",
+            "url": "https://tonhalle-orchester.ch",
+            "geo": {
+                "latitude": 47.365663,
+                "longitude": 8.535932
+            },
+            "comment": "Advance booking recommended"
+        },
+        {
+            "uid": "2",
+            "start": "2025-10-02T19:30:00Z",
+            "end": "2025-10-02T22:00:00Z",
+            "summary": "Classical Concert - Zurich Chamber Orchestra",
+            "description": "An evening of classical music featuring works by Mozart, Beethoven, and contemporary Swiss composers performed by the renowned Zurich Chamber Orchestra.",
+            "location": "Opernhaus Zurich, Falkenstrasse 1, 8008 Zurich",
+            "url": "https://opernhaus.ch",
+            "geo": {
+                "latitude": 47.365016,
+                "longitude": 8.547841
+            },
+            "comment": "Formal attire recommended"
+        },
+        {
+            "uid": "3",
+            "start": "2025-10-03T18:00:00Z",
+            "end": "2025-10-03T21:00:00Z",
+            "summary": "Street Art Festival - Zurich West",
+            "description": "Urban art manifestation showcasing local and international street artists. Live painting, installations, and hip-hop performances in the trendy Zurich West district.",
+            "location": "Gerold Chuchi, Geroldstrasse 23, 8005 Zurich",
+            "url": "https://zurichstreetart.ch",
+            "geo": {
+                "latitude": 47.388611,
+                "longitude": 8.516944
+            },
+            "comment": "Free admission, family-friendly event"
+        },
+        {
+            "uid": "4",
+            "start": "2025-10-04T17:00:00Z",
+            "end": "2025-10-04T22:00:00Z",
+            "summary": "Zurich Film Festival - Opening Gala",
+            "description": "Opening gala of the annual Zurich Film Festival with red carpet premieres, international film screenings, and networking events for cinema enthusiasts.",
+            "location": "Kino Corso, Theaterstrasse 10, 8001 Zurich",
+            "url": "https://zff.com",
+            "geo": {
+                "latitude": 47.370506,
+                "longitude": 8.544102
+            },
+            "comment": "VIP tickets available, press accreditation required"
+        },
+        {
+            "uid": "5",
+            "start": "2025-10-05T15:00:00Z",
+            "end": "2025-10-05T20:00:00Z",
+            "summary": "Environmental Manifestation - Climate Action March",
+            "description": "Peaceful demonstration for climate action and environmental protection. March through Zurich city center raising awareness about sustainability and green policies.",
+            "location": "Sechseläutenplatz, 8001 Zurich",
+            "url": "https://climateaction-zurich.org",
+            "geo": {
+                "latitude": 47.367347,
+                "longitude": 8.548056
+            },
+            "comment": "Peaceful demonstration, all ages welcome"
+        },
+        {
+            "uid": "6",
+            "start": "2025-10-06T16:00:00Z",
+            "end": "2025-10-06T19:00:00Z",
+            "summary": "Electronic Music Festival - Zurich Beats",
+            "description": "Electronic music festival featuring DJs and electronic artists from across Europe. Outdoor stage with cutting-edge sound systems and visual effects.",
+            "location": "Landiwiese, Mythenquai, 8002 Zurich",
+            "url": "https://zurichbeats.ch",
+            "geo": {
+                "latitude": 47.353889,
+                "longitude": 8.536667
+            },
+            "comment": "Age 18+, ID required for entry"
+        }
+    ]
+}

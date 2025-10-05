@@ -1,6 +1,6 @@
 # icaljson
 
-[![Version](https://img.shields.io/badge/version-v0.8.1-blue)](https://github.com/beyondcivic/icaljson/releases/tag/v0.8.1)
+[![Version](https://img.shields.io/badge/version-v0.8.2-blue)](https://github.com/beyondcivic/icaljson/releases/tag/v0.8.2)
 [![Go Version](https://img.shields.io/badge/Go-1.24+-00ADD8?logo=go)](https://golang.org/doc/devel/release.html)
 [![Go Reference](https://pkg.go.dev/badge/github.com/beyondcivic/icaljson.svg)](https://pkg.go.dev/github.com/beyondcivic/icaljson)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
